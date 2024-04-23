@@ -8,7 +8,21 @@ namespace CsharpConsole
         public int Level { get; set; }
         public string Job { get; set; }
         public int Attack { get; set; }
+        public int TotalAttack
+        {
+            get
+            {
+                return Attack + Inventory.CalculateEquippedStats().TotalAttack;
+            }
+        }
         public int Defense { get; set; }
+        public int TotalDefense
+        {
+            get
+            {
+                return Defense + Inventory.CalculateEquippedStats().TotalDefense;
+            }
+        }
         public int HP { get; set; }
         public int Gold { get; set; }
 
@@ -38,6 +52,21 @@ namespace CsharpConsole
             sb.AppendLine($"Gold : {Gold} G");
 
             Console.WriteLine(sb.ToString());
+        }
+
+        public string TakeDamage(int damage)
+        {
+            int oldHP = HP;
+            HP -= damage;
+            if (HP < 0) HP = 0;
+            return $"체력 {oldHP} -> {HP}";
+        }
+
+        public string AddGold(int gold)
+        {
+            int oldGold = Gold;
+            Gold += gold;
+            return $"Gold {oldGold} G -> {Gold} G";
         }
     }
 }

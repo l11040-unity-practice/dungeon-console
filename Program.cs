@@ -4,6 +4,7 @@ internal class Program
 {
     static Player _player = new Player("이종윤", 1, "전사", 10, 5, 100, 10000);
     static Shop _shop = new Shop();
+    static DungeonManager _dungeonManager = new DungeonManager();
     static void Main(string[] args)
     {
         InitGame();
@@ -13,6 +14,7 @@ internal class Program
         mainMenu.AddOption(() => "상태 보기", StatusMenu);
         mainMenu.AddOption(() => "인벤토리", InventoryMenu);
         mainMenu.AddOption(() => "상점", ShopMenu);
+        mainMenu.AddOption(() => "던전입장", DungeonMenu);
 
         mainMenu.Run();
     }
@@ -91,7 +93,18 @@ internal class Program
         shopSaleMenu.Run();
     }
 
-
+    static void DungeonMenu()
+    {
+        Menu dungeonMenu = new Menu();
+        dungeonMenu.SetTitle("던전입장", "이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+        for (int i = 0; i < _dungeonManager.Dungeons.Count; i++)
+        {
+            int localIndex = i;
+            dungeonMenu.AddOption(_dungeonManager.Dungeons[localIndex].DungeonInfo,
+            () => { _dungeonManager.EnterDengeon(_player, _dungeonManager.Dungeons[localIndex]); });
+        }
+        dungeonMenu.Run();
+    }
 
     static void InitGame()
     {
@@ -101,7 +114,10 @@ internal class Program
         _shop.AddItem(new ShopItem("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, ItemType.Weapon, attack: 2));
         _shop.AddItem(new ShopItem("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, attack: 5));
         _shop.AddItem(new ShopItem("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000, ItemType.Weapon, attack: 7));
-
         _shop.AddItem(new ShopItem("광선검", "제다이 전사들이 사용하던 검입니다.", 5000, ItemType.Weapon, attack: 15));
+
+        _dungeonManager.AddDungeon(new Dungeon("쉬운 던전", 1000, 5));
+        _dungeonManager.AddDungeon(new Dungeon("일반 던전", 1700, 11));
+        _dungeonManager.AddDungeon(new Dungeon("어려운 던전", 2500, 17));
     }
 }
