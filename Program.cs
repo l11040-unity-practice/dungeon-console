@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    static Player _player = new Player("이종윤", 1, "전사", 10, 5, 100, 1500);
+    static Player _player = new Player("이종윤", 1, "전사", 10, 5, 100, 10000);
     static Shop _shop = new Shop();
     static void Main(string[] args)
     {
@@ -21,7 +21,7 @@ internal class Program
     {
         Menu statusMenu = new Menu();
         statusMenu.SetTitle("상태 보기", "캐릭터의 정보가 표시됩니다.");
-        statusMenu.setInfo(_player.DisplayInfo);
+        statusMenu.SetInfo(_player.DisplayInfo);
         statusMenu.Run();
     }
 
@@ -29,7 +29,7 @@ internal class Program
     {
         Menu inventoryMenu = new Menu();
         inventoryMenu.SetTitle("인벤토리", "보유 중인 아이템을 관리할 수 있습니다.");
-        inventoryMenu.setInfo(() => _player.Inventory.DisplayInfo());
+        inventoryMenu.SetInfo(() => _player.Inventory.DisplayInfo());
         inventoryMenu.AddOption(() => "장착 관리", EquipMenu);
         inventoryMenu.Run();
     }
@@ -38,7 +38,7 @@ internal class Program
     {
         Menu equipMenu = new Menu();
         equipMenu.SetTitle("인벤토리 - 장착 관리", "보유 중인 아이템을 관리할 수 있습니다.");
-        equipMenu.setInfo(() => { _player.Inventory.DisplayInfo(isShowItems: false); });
+        equipMenu.SetInfo(() => { _player.Inventory.DisplayInfo(isShowItems: false); });
         for (int i = 0; i < _player.Inventory.Items.Count; i++)
         {
             int localIndex = i;
@@ -51,7 +51,7 @@ internal class Program
     {
         Menu shopMenu = new Menu();
         shopMenu.SetTitle("상점", "필요한 아이템을 얻을 수 있는 상점입니다.");
-        shopMenu.setInfo(() => { _shop.DisplayInfo(_player); });
+        shopMenu.SetInfo(() => { _shop.DisplayInfo(_player); });
         shopMenu.AddOption(() => "아이템 구매", ShopBuyMenu);
         shopMenu.AddOption(() => "아이템 판매", ShopSaleMenu);
         shopMenu.Run();
@@ -61,7 +61,7 @@ internal class Program
     {
         Menu shopBuyMenu = new Menu();
         shopBuyMenu.SetTitle("상점 - 아이템 구매 ", "필요한 아이템을 얻을 수 있는 상점입니다.");
-        shopBuyMenu.setInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
+        shopBuyMenu.SetInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
         for (int i = 0; i < _shop.Items.Count; i++)
         {
             int localIndex = i;
@@ -74,17 +74,20 @@ internal class Program
     {
         Menu shopSaleMenu = new Menu();
         shopSaleMenu.SetTitle("상점 - 아이템 구매 ", "필요한 아이템을 얻을 수 있는 상점입니다.");
-        shopSaleMenu.setInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
-        for (int i = 0; i < _player.Inventory.Items.Count; i++)
+        shopSaleMenu.SetInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
+        shopSaleMenu.RefreshMenu = () =>
         {
-            int localIndex = i;
-            shopSaleMenu.AddOption(_player.Inventory.Items[localIndex].ItemInfo,
-                                    () =>
-                                    {
-                                        _shop.Sale(_player, _player.Inventory.Items[localIndex]);
-                                        shopSaleMenu.DeleteOption(localIndex);
-                                    });
-        }
+            shopSaleMenu.ResetOption();
+            for (int i = 0; i < _player.Inventory.Items.Count; i++)
+            {
+                int localIndex = i;
+                shopSaleMenu.AddOption(_player.Inventory.Items[localIndex].ItemInfo,
+                                        () =>
+                                        {
+                                            _shop.Sale(_player, _player.Inventory.Items[localIndex]);
+                                        });
+            }
+        };
         shopSaleMenu.Run();
     }
 

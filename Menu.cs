@@ -10,6 +10,7 @@ namespace CsharpConsole
         public string Title { get; set; }
         public string Desc { get; set; }
         public Action Info { get; set; }
+        public Action RefreshMenu { get; set; }
 
         private List<Func<string>> options;
         private List<Action> actions;
@@ -25,21 +26,20 @@ namespace CsharpConsole
             Desc = desc;
         }
 
-        public void setInfo(Action info)
+        public void SetInfo(Action info)
         {
             Info = info;
         }
 
-        public int AddOption(Func<string> option, Action action)
+        public void AddOption(Func<string> option, Action action)
         {
             options.Add(option);
             actions.Add(action);
-            return options.Count();
         }
-        public void DeleteOption(int index)
+        public void ResetOption()
         {
-            options.RemoveAt(index);
-            actions.RemoveAt(index);
+            options = new List<Func<string>>();
+            actions = new List<Action>();
         }
 
         public void Show()
@@ -81,7 +81,7 @@ namespace CsharpConsole
             while (true)
             {
                 Console.Clear();
-
+                if (RefreshMenu != null) RefreshMenu();
                 Show();
                 int choice = GetChoice();
 
