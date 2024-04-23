@@ -31,6 +31,11 @@ namespace CsharpConsole
             }
             else
             {
+                Item currentEquip = Items.Find(iItem => iItem.IsEquipped && iItem.Type == item.Type);
+                if (currentEquip != null)
+                {
+                    currentEquip.IsEquipped = false;
+                }
                 Console.WriteLine($"[{item.Name}] 장착합니다.");
             }
             item.IsEquipped = !item.IsEquipped;
