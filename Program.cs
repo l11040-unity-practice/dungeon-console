@@ -52,8 +52,22 @@ internal class Program
         Menu shopMenu = new Menu();
         shopMenu.SetTitle("상점", "필요한 아이템을 얻을 수 있는 상점입니다.");
         shopMenu.setInfo(() => { _shop.DisplayInfo(_player); });
-        shopMenu.AddOption(() => "아이템 구매", ShopSaleMenu);
+        shopMenu.AddOption(() => "아이템 구매", ShopBuyMenu);
+        shopMenu.AddOption(() => "아이템 판매", ShopSaleMenu);
         shopMenu.Run();
+    }
+
+    static void ShopBuyMenu()
+    {
+        Menu shopBuyMenu = new Menu();
+        shopBuyMenu.SetTitle("상점 - 아이템 구매 ", "필요한 아이템을 얻을 수 있는 상점입니다.");
+        shopBuyMenu.setInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
+        for (int i = 0; i < _shop.Items.Count; i++)
+        {
+            int localIndex = i;
+            shopBuyMenu.AddOption(_shop.Items[localIndex].ItemInfo, () => { _shop.Buy(_player, _shop.Items[localIndex]); });
+        }
+        shopBuyMenu.Run();
     }
 
     static void ShopSaleMenu()
@@ -61,13 +75,19 @@ internal class Program
         Menu shopSaleMenu = new Menu();
         shopSaleMenu.SetTitle("상점 - 아이템 구매 ", "필요한 아이템을 얻을 수 있는 상점입니다.");
         shopSaleMenu.setInfo(() => { _shop.DisplayInfo(_player, isShowItems: false); });
-        for (int i = 0; i < _shop.Items.Count; i++)
+        for (int i = 0; i < _player.Inventory.Items.Count; i++)
         {
             int localIndex = i;
-            shopSaleMenu.AddOption(_shop.Items[localIndex].ItemInfo, () => { _shop.Buy(_player, _shop.Items[localIndex]); });
+            shopSaleMenu.AddOption(_player.Inventory.Items[localIndex].ItemInfo,
+                                    () =>
+                                    {
+                                        _shop.Sale(_player, _player.Inventory.Items[localIndex]);
+                                        shopSaleMenu.DeleteOption(localIndex);
+                                    });
         }
         shopSaleMenu.Run();
     }
+
 
 
     static void InitGame()
@@ -78,5 +98,7 @@ internal class Program
         _shop.AddItem(new ShopItem("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, ItemType.Weapon, attack: 2));
         _shop.AddItem(new ShopItem("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, attack: 5));
         _shop.AddItem(new ShopItem("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000, ItemType.Weapon, attack: 7));
+
+        _shop.AddItem(new ShopItem("광선검", "제다이 전사들이 사용하던 검입니다.", 5000, ItemType.Weapon, attack: 15));
     }
 }

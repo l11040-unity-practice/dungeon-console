@@ -77,5 +77,17 @@ namespace CsharpConsole
             }
             Console.ReadLine();
         }
+
+        public void Sale(Player player, Item invenItem)
+        {
+            int salePrice = Convert.ToInt32(Math.Round(invenItem.Price * 0.85));
+            player.Gold += salePrice;
+            player.Inventory.Items.Remove(invenItem);
+            Items.Find(item => item.Id == invenItem.Id).IsSale = false;
+
+            Console.WriteLine($"[{invenItem.Name}] 이 {salePrice} G 에 판매되었습니다.");
+
+            Console.ReadLine();
+        }
     }
 }

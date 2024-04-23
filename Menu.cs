@@ -30,10 +30,16 @@ namespace CsharpConsole
             Info = info;
         }
 
-        public void AddOption(Func<string> option, Action action)
+        public int AddOption(Func<string> option, Action action)
         {
             options.Add(option);
             actions.Add(action);
+            return options.Count();
+        }
+        public void DeleteOption(int index)
+        {
+            options.RemoveAt(index);
+            actions.RemoveAt(index);
         }
 
         public void Show()
