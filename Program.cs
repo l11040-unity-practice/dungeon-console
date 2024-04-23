@@ -7,7 +7,10 @@ internal class Program
     static DungeonManager _dungeonManager;
     static void Main(string[] args)
     {
+        // 게임 초기화, 저장된 데이터 불러오기
         InitGame();
+
+        //메인 메뉴 구성
         Menu mainMenu = new Menu();
         mainMenu.SetTitle("스파르타 마을에 오신 여러분 환영합니다.", "이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
 
@@ -20,12 +23,16 @@ internal class Program
 
         mainMenu.Run();
     }
+
+    // 저장 메뉴
     static void SaveData()
     {
         DataManager.SaveData("Player", _player);
         DataManager.SaveData("Shop", _shop);
         DataManager.SaveData("DungeonManager", _dungeonManager);
     }
+
+    // 휴식 메뉴
     static void RestMenu()
     {
         Menu restMenu = new Menu();
@@ -35,6 +42,7 @@ internal class Program
         restMenu.Run();
     }
 
+    // 상태 보기 메뉴
     static void StatusMenu()
     {
         Menu statusMenu = new Menu();
@@ -43,6 +51,7 @@ internal class Program
         statusMenu.Run();
     }
 
+    // 인벤토리 메뉴
     static void InventoryMenu()
     {
         Menu inventoryMenu = new Menu();
@@ -52,6 +61,7 @@ internal class Program
         inventoryMenu.Run();
     }
 
+    // 인벤토리 - 장착 메뉴
     static void EquipMenu()
     {
         Menu equipMenu = new Menu();
@@ -65,6 +75,7 @@ internal class Program
         equipMenu.Run();
     }
 
+    // 상점 메뉴
     static void ShopMenu()
     {
         Menu shopMenu = new Menu();
@@ -75,6 +86,7 @@ internal class Program
         shopMenu.Run();
     }
 
+    // 상점 - 구매 메뉴
     static void ShopBuyMenu()
     {
         Menu shopBuyMenu = new Menu();
@@ -88,6 +100,7 @@ internal class Program
         shopBuyMenu.Run();
     }
 
+    // 상점 - 판매 메뉴
     static void ShopSaleMenu()
     {
         Menu shopSaleMenu = new Menu();
@@ -109,6 +122,7 @@ internal class Program
         shopSaleMenu.Run();
     }
 
+    // 던전 메뉴
     static void DungeonMenu()
     {
         Menu dungeonMenu = new Menu();
@@ -124,7 +138,7 @@ internal class Program
 
     static void InitGame()
     {
-
+        // 저장된 데이터 불러오기
         _player = DataManager.LoadData<Player>("Player");
         _shop = DataManager.LoadData<Shop>("Shop");
         _dungeonManager = DataManager.LoadData<DungeonManager>("DungeonManager");

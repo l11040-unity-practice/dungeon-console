@@ -7,6 +7,8 @@ namespace CsharpConsole
         {
             Items = new List<Item>();
         }
+
+        // 화면에서 보여줄 아이템 목록 출력
         public void DisplayInfo(bool isShowItems = true)
         {
             Console.WriteLine("[아이템 목록]");
@@ -18,11 +20,14 @@ namespace CsharpConsole
                 }
             }
         }
+
+        // 인벤토리에 아이템 추가
         public void AddItem(Item item)
         {
             Items.Add(item);
         }
 
+        // 인벤토리 아이템 장착
         public void Equipped(Item item)
         {
             if (item.IsEquipped)

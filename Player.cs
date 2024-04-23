@@ -8,6 +8,7 @@ namespace CsharpConsole
         public int Level { get; set; }
         public string Job { get; set; }
         public int Attack { get; set; }
+        // 호출 시 마다 총 공격력(기본 + 장비 + 레벨) 계산
         public int TotalAttack
         {
             get
@@ -16,6 +17,7 @@ namespace CsharpConsole
             }
         }
         public int Defense { get; set; }
+        // 호출 시 마다 총 방어력(기본 + 장비 + 레벨) 계산
         public int TotalDefense
         {
             get
@@ -26,6 +28,7 @@ namespace CsharpConsole
         public int HP { get; set; }
         public int Gold { get; set; }
 
+        // 인벤토리 
         public Inventory Inventory { get; set; }
         public Player(string name, int level, string job, int attack, int defense, int hp, int gold)
         {
@@ -38,6 +41,8 @@ namespace CsharpConsole
             Gold = gold;
             Inventory = new Inventory();
         }
+
+        // 상태보기에서 보여줄 플레이어 정보
         public void DisplayInfo()
         {
             var equippedStats = CalculateEquippedStats();
@@ -70,11 +75,14 @@ namespace CsharpConsole
 
             Console.WriteLine(sb.ToString());
         }
+
+        // 레벨업
         public void LevelUp()
         {
             Level++;
         }
 
+        // 플레이어가 데미지 입음
         public string TakeDamage(int damage)
         {
             int oldHP = HP;
@@ -86,6 +94,7 @@ namespace CsharpConsole
             return $"체력 {oldHP} -> {HP}";
         }
 
+        // 골드 추가
         public string AddGold(int gold)
         {
             int oldGold = Gold;
@@ -93,12 +102,14 @@ namespace CsharpConsole
             return $"Gold {oldGold} G -> {Gold} G";
         }
 
+        // 휴식에서 보여줄 정보
         public void RestInfo()
         {
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{Gold} G\n");
         }
 
+        // 휴식
         public void Rest()
         {
             if (Gold >= 500)
@@ -114,7 +125,8 @@ namespace CsharpConsole
             Console.ReadLine();
         }
 
-        public (int equippedAttack, int equippedDefense) CalculateEquippedStats()
+        // 총 장비 스텟 계산
+        private (int equippedAttack, int equippedDefense) CalculateEquippedStats()
         {
             int equippedAttack = 0;
             int equippedDefense = 0;
@@ -131,7 +143,8 @@ namespace CsharpConsole
             return (equippedAttack, equippedDefense);
         }
 
-        public (int levelAttack, int levelDefense) CalculateLevelStats()
+        // 레벨업 스텟 계산
+        private (int levelAttack, int levelDefense) CalculateLevelStats()
         {
             int levelAttack = (Level - 1) * 1;
             int levelDefense = (Level - 1) * 2;

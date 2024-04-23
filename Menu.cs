@@ -7,9 +7,9 @@ namespace CsharpConsole
 {
     public class Menu
     {
-        public string Title { get; set; }
-        public string Desc { get; set; }
-        public Action Info { get; set; }
+        public string Title { get; private set; }
+        public string Desc { get; private set; }
+        public Action Info { get; private set; }
         public Action RefreshMenu { get; set; }
 
         private List<Func<string>> options;
@@ -20,28 +20,34 @@ namespace CsharpConsole
             actions = new List<Action>();
         }
 
+        // 타이틀 및 설명 추가
         public void SetTitle(string title, string desc)
         {
             Title = title;
             Desc = desc;
         }
 
+        // 타이틀 밑에 Info 추가
         public void SetInfo(Action info)
         {
             Info = info;
         }
 
+        // 선택 옵션 추가
         public void AddOption(Func<string> option, Action action)
         {
             options.Add(option);
             actions.Add(action);
         }
+
+        // 선택 옵션 비우기
         public void ResetOption()
         {
             options = new List<Func<string>>();
             actions = new List<Action>();
         }
 
+        // 선택 옵션을 화면에 보여줌
         public void Show()
         {
             if (Title != null)
@@ -66,6 +72,7 @@ namespace CsharpConsole
             Console.WriteLine("0. 나가기");
         }
 
+        // 선택 옵션의 내용을 선택
         private int GetChoice()
         {
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
@@ -84,6 +91,7 @@ namespace CsharpConsole
             }
         }
 
+        // 일렬의 과정 실행
         public void Run()
         {
             while (true)

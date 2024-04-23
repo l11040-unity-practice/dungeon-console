@@ -12,6 +12,7 @@ namespace CsharpConsole
         public ShopItem(string name, string desc, int price, ItemType type, int attack = 0, int defense = 0)
         : base(name, desc, price, type, attack, defense) { }
 
+        // 아이템 정보 한줄로 만듦
         public new string ItemInfo()
         {
             StringBuilder sb = new StringBuilder();
@@ -41,6 +42,7 @@ namespace CsharpConsole
     }
     public class Shop
     {
+        // 상점에 진열된 아이템
         public List<ShopItem> Items { get; set; }
 
         public Shop()
@@ -48,10 +50,15 @@ namespace CsharpConsole
             Items = new List<ShopItem>();
         }
 
+        // 아이템 추가
         public void AddItem(ShopItem item)
         {
             Items.Add(item);
+
+
         }
+
+        // Console.write로 보여줄 상점 내용
         public void DisplayInfo(Player player, bool isShowItems = true)
         {
             Console.WriteLine("[보유 골드]");
@@ -66,6 +73,8 @@ namespace CsharpConsole
                 }
             }
         }
+
+        // 상점 아이템 구매
         public void Buy(Player player, ShopItem buyItem)
         {
             if (buyItem.IsSale)
@@ -86,6 +95,7 @@ namespace CsharpConsole
             Console.ReadLine();
         }
 
+        // 상점에 아이템 판매
         public void Sale(Player player, Item invenItem)
         {
             int salePrice = Convert.ToInt32(Math.Round(invenItem.Price * 0.85));

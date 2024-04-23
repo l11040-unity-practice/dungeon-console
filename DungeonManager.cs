@@ -19,6 +19,7 @@ namespace CsharpConsole
             Defense = defense;
         }
 
+        // 던전 기본 정보 한줄
         public string DungeonInfo()
         {
             StringBuilder sb = new StringBuilder();
@@ -36,11 +37,13 @@ namespace CsharpConsole
             Dungeons = new List<Dungeon>();
         }
 
+        // 던전 추가
         public void AddDungeon(Dungeon dungeon)
         {
             Dungeons.Add(dungeon);
         }
 
+        // 던전 입장
         public void EnterDengeon(Player _player, Dungeon dungeon)
         {
             Menu menu = new Menu();

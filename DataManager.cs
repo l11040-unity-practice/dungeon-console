@@ -9,6 +9,8 @@ namespace CsharpConsole
     public static class DataManager
     {
         const string DIR_NAME = "data";
+
+        // 데이터 저장
         public static void SaveData<T>(string fileName, T data)
         {
             string filePath = Path.Combine(DIR_NAME, $"{fileName}.json");
@@ -20,6 +22,7 @@ namespace CsharpConsole
             File.WriteAllText(filePath, json);
         }
 
+        // 데이터 불러오기
         public static T LoadData<T>(string fileName)
         {
             string filePath = Path.Combine(DIR_NAME, $"{fileName}.json");

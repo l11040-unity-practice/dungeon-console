@@ -29,6 +29,7 @@ namespace CsharpConsole
             Defense = defense;
         }
 
+        // 아이템 기본 정보 한줄
         public virtual string ItemInfo()
         {
             StringBuilder sb = new StringBuilder();
