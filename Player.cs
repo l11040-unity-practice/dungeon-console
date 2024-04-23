@@ -1,0 +1,43 @@
+using System.Text;
+
+namespace CsharpConsole
+{
+    public class Player
+    {
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public string Job { get; set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int HP { get; set; }
+        public int Gold { get; set; }
+
+        public Inventory Inventory { get; set; }
+        public Player(string name, int level, string job, int attack, int defense, int hp, int gold)
+        {
+            Name = name;
+            Level = level;
+            Job = job;
+            Attack = attack;
+            Defense = defense;
+            HP = hp;
+            Gold = gold;
+            Inventory = new Inventory();
+        }
+        public void DisplayInfo()
+        {
+            var stats = Inventory.CalculateEquippedStats();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Lv. {Level}");
+            sb.AppendLine($"Chad ({Job})");
+            sb.Append($"공격력 : {Attack}");
+            if (stats.TotalAttack != 0) sb.Append($" (+{stats.TotalAttack})");
+            sb.Append($"\n방어력 : {Defense}");
+            if (stats.TotalDefense != 0) sb.Append($" (+{stats.TotalDefense})");
+            sb.AppendLine($"\n체력 : {HP}");
+            sb.AppendLine($"Gold : {Gold} G");
+
+            Console.WriteLine(sb.ToString());
+        }
+    }
+}
