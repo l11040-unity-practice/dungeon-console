@@ -68,5 +68,26 @@ namespace CsharpConsole
             Gold += gold;
             return $"Gold {oldGold} G -> {Gold} G";
         }
+
+        public void RestInfo()
+        {
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{Gold} G\n");
+        }
+
+        public void Rest()
+        {
+            if (Gold >= 500)
+            {
+                Gold -= 500;
+                HP = 100;
+                Console.WriteLine("휴식을 완료했습니다.");
+            }
+            else
+            {
+                Console.WriteLine("Gold 가 부족합니다");
+            }
+            Console.ReadLine();
+        }
     }
 }

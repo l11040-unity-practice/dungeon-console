@@ -15,8 +15,17 @@ internal class Program
         mainMenu.AddOption(() => "인벤토리", InventoryMenu);
         mainMenu.AddOption(() => "상점", ShopMenu);
         mainMenu.AddOption(() => "던전입장", DungeonMenu);
+        mainMenu.AddOption(() => "휴식하기", RestMenu);
 
         mainMenu.Run();
+    }
+    static void RestMenu()
+    {
+        Menu restMenu = new Menu();
+        restMenu.SetTitle("휴식하기", "500 G 를 내면 체력을 회복할 수 있습니다.");
+        restMenu.SetInfo(() => _player.RestInfo());
+        restMenu.AddOption(() => "휴식하기", _player.Rest);
+        restMenu.Run();
     }
 
     static void StatusMenu()
