@@ -16,9 +16,17 @@ namespace CsharpConsole
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"{Name}\t| ");
-            if (Attack != 0) sb.Append($"공격력 +{Attack}\t| ");
-            if (Defense != 0) sb.Append($"방어력 +{Defense}\t| ");
+            if (Attack != 0)
+            {
+                sb.Append($"공격력 +{Attack}\t| ");
+            }
+            if (Defense != 0)
+            {
+                sb.Append($"방어력 +{Defense}\t| ");
+            }
+
             sb.Append($"{Desc}\t| ");
+
             if (IsSale)
             {
                 sb.Append($"구매완료");

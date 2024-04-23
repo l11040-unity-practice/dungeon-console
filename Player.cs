@@ -46,11 +46,25 @@ namespace CsharpConsole
             sb.AppendLine($"Lv. {Level}");
             sb.AppendLine($"Chad ({Job})");
             sb.Append($"공격력 : {Attack}");
-            if (equippedStats.equippedAttack != 0) sb.Append($" (+{equippedStats.equippedAttack})");
-            if (levelStats.levelAttack != 0) sb.Append($" (+{levelStats.levelAttack})");
+            if (equippedStats.equippedAttack != 0)
+            {
+                sb.Append($" (+{equippedStats.equippedAttack})");
+            }
+            if (levelStats.levelAttack != 0)
+            {
+                sb.Append($" (+{levelStats.levelAttack})");
+            }
+
             sb.Append($"\n방어력 : {Defense}");
-            if (equippedStats.equippedDefense != 0) sb.Append($" (+{equippedStats.equippedDefense})");
-            if (levelStats.levelDefense != 0) sb.Append($" (+{levelStats.levelDefense})");
+
+            if (equippedStats.equippedDefense != 0)
+            {
+                sb.Append($" (+{equippedStats.equippedDefense})");
+            }
+            if (levelStats.levelDefense != 0)
+            {
+                sb.Append($" (+{levelStats.levelDefense})");
+            }
             sb.AppendLine($"\n체력 : {HP}");
             sb.AppendLine($"Gold : {Gold} G");
 
@@ -65,7 +79,10 @@ namespace CsharpConsole
         {
             int oldHP = HP;
             HP -= damage;
-            if (HP < 0) HP = 0;
+            if (HP < 0)
+            {
+                HP = 0;
+            }
             return $"체력 {oldHP} -> {HP}";
         }
 

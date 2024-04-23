@@ -44,10 +44,18 @@ namespace CsharpConsole
 
         public void Show()
         {
-            if (Title != null) Console.WriteLine(Title);
-            if (Desc != null) Console.WriteLine(Desc);
-
-            if (Info != null) { Console.WriteLine(); Info(); }
+            if (Title != null)
+            {
+                Console.WriteLine(Title);
+            }
+            if (Desc != null)
+            {
+                Console.WriteLine(Desc);
+            }
+            if (Info != null)
+            {
+                Console.WriteLine(); Info();
+            }
 
             Console.WriteLine();
             for (int i = 0; i < options.Count; i++)
@@ -81,7 +89,10 @@ namespace CsharpConsole
             while (true)
             {
                 Console.Clear();
-                if (RefreshMenu != null) RefreshMenu();
+                if (RefreshMenu != null)
+                {
+                    RefreshMenu();
+                }
                 Show();
                 int choice = GetChoice();
 

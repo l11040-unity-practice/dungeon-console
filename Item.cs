@@ -32,10 +32,19 @@ namespace CsharpConsole
         public virtual string ItemInfo()
         {
             StringBuilder sb = new StringBuilder();
-            if (IsEquipped) sb.Append("[E]");
+            if (IsEquipped)
+            {
+                sb.Append("[E]");
+            }
             sb.Append($"{Name}\t| ");
-            if (Attack != 0) sb.Append($"공격력 +{Attack}\t| ");
-            if (Defense != 0) sb.Append($"방어력 +{Defense}\t| ");
+            if (Attack != 0)
+            {
+                sb.Append($"공격력 +{Attack}\t| ");
+            }
+            if (Defense != 0)
+            {
+                sb.Append($"방어력 +{Defense}\t| ");
+            }
             sb.Append($"{Desc}");
             return sb.ToString();
         }
