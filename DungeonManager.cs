@@ -72,6 +72,7 @@ namespace CsharpConsole
                     int additionalGoldPer = random.Next(_player.TotalAttack, _player.TotalAttack * 2);
                     int rewardGold = Convert.ToInt32(Math.Round(dungeon.RewardGold * (additionalGoldPer / 100f + 1)));
                     Console.WriteLine(_player.AddGold(rewardGold));
+                    _player.LevelUp();
                 }
                 else
                 {

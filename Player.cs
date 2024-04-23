@@ -12,7 +12,7 @@ namespace CsharpConsole
         {
             get
             {
-                return Attack + Inventory.CalculateEquippedStats().TotalAttack;
+                return Attack + CalculateEquippedStats().equippedAttack + CalculateLevelStats().levelAttack;
             }
         }
         public int Defense { get; set; }
@@ -20,7 +20,7 @@ namespace CsharpConsole
         {
             get
             {
-                return Defense + Inventory.CalculateEquippedStats().TotalDefense;
+                return Defense + CalculateEquippedStats().equippedDefense + CalculateLevelStats().levelDefense;
             }
         }
         public int HP { get; set; }
@@ -40,18 +40,25 @@ namespace CsharpConsole
         }
         public void DisplayInfo()
         {
-            var stats = Inventory.CalculateEquippedStats();
+            var equippedStats = CalculateEquippedStats();
+            var levelStats = CalculateLevelStats();
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Lv. {Level}");
             sb.AppendLine($"Chad ({Job})");
             sb.Append($"공격력 : {Attack}");
-            if (stats.TotalAttack != 0) sb.Append($" (+{stats.TotalAttack})");
+            if (equippedStats.equippedAttack != 0) sb.Append($" (+{equippedStats.equippedAttack})");
+            if (levelStats.levelAttack != 0) sb.Append($" (+{levelStats.levelAttack})");
             sb.Append($"\n방어력 : {Defense}");
-            if (stats.TotalDefense != 0) sb.Append($" (+{stats.TotalDefense})");
+            if (equippedStats.equippedDefense != 0) sb.Append($" (+{equippedStats.equippedDefense})");
+            if (levelStats.levelDefense != 0) sb.Append($" (+{levelStats.levelDefense})");
             sb.AppendLine($"\n체력 : {HP}");
             sb.AppendLine($"Gold : {Gold} G");
 
             Console.WriteLine(sb.ToString());
+        }
+        public void LevelUp()
+        {
+            Level++;
         }
 
         public string TakeDamage(int damage)
@@ -88,6 +95,31 @@ namespace CsharpConsole
                 Console.WriteLine("Gold 가 부족합니다");
             }
             Console.ReadLine();
+        }
+
+        public (int equippedAttack, int equippedDefense) CalculateEquippedStats()
+        {
+            int equippedAttack = 0;
+            int equippedDefense = 0;
+
+            foreach (var item in Inventory.Items)
+            {
+                if (item.IsEquipped)
+                {
+                    equippedAttack += item.Attack;
+                    equippedDefense += item.Defense;
+                }
+            }
+
+            return (equippedAttack, equippedDefense);
+        }
+
+        public (int levelAttack, int levelDefense) CalculateLevelStats()
+        {
+            int levelAttack = (Level - 1) * 1;
+            int levelDefense = (Level - 1) * 2;
+
+            return (levelAttack, levelDefense);
         }
     }
 }

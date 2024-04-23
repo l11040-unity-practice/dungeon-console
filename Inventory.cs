@@ -41,21 +41,5 @@ namespace CsharpConsole
             item.IsEquipped = !item.IsEquipped;
             Console.ReadLine();
         }
-        public (int TotalAttack, int TotalDefense) CalculateEquippedStats()
-        {
-            int totalAttack = 0;
-            int totalDefense = 0;
-
-            foreach (var item in Items)
-            {
-                if (item.IsEquipped)
-                {
-                    totalAttack += item.Attack;
-                    totalDefense += item.Defense;
-                }
-            }
-
-            return (totalAttack, totalDefense);
-        }
     }
 }
