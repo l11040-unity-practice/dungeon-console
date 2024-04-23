@@ -2,9 +2,9 @@
 
 internal class Program
 {
-    static Player _player = new Player("이종윤", 1, "전사", 10, 5, 100, 10000);
-    static Shop _shop = new Shop();
-    static DungeonManager _dungeonManager = new DungeonManager();
+    static Player _player;
+    static Shop _shop;
+    static DungeonManager _dungeonManager;
     static void Main(string[] args)
     {
         InitGame();
@@ -16,8 +16,15 @@ internal class Program
         mainMenu.AddOption(() => "상점", ShopMenu);
         mainMenu.AddOption(() => "던전입장", DungeonMenu);
         mainMenu.AddOption(() => "휴식하기", RestMenu);
+        mainMenu.AddOption(() => "데이터 저장하기", SaveData);
 
         mainMenu.Run();
+    }
+    static void SaveData()
+    {
+        DataManager.SaveData("Player", _player);
+        DataManager.SaveData("Shop", _shop);
+        DataManager.SaveData("DungeonManager", _dungeonManager);
     }
     static void RestMenu()
     {
@@ -117,16 +124,34 @@ internal class Program
 
     static void InitGame()
     {
-        _shop.AddItem(new ShopItem("수련자의 갑옷", "수련에 도움을 주는 갑옷입니다.", 1000, ItemType.Armor, defense: 5));
-        _shop.AddItem(new ShopItem("무쇠 갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 2300, ItemType.Armor, defense: 9));
-        _shop.AddItem(new ShopItem("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, ItemType.Armor, defense: 15));
-        _shop.AddItem(new ShopItem("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, ItemType.Weapon, attack: 2));
-        _shop.AddItem(new ShopItem("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, attack: 5));
-        _shop.AddItem(new ShopItem("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000, ItemType.Weapon, attack: 7));
-        _shop.AddItem(new ShopItem("광선검", "제다이 전사들이 사용하던 검입니다.", 5000, ItemType.Weapon, attack: 15));
 
-        _dungeonManager.AddDungeon(new Dungeon("쉬운 던전", 1000, 5));
-        _dungeonManager.AddDungeon(new Dungeon("일반 던전", 1700, 11));
-        _dungeonManager.AddDungeon(new Dungeon("어려운 던전", 2500, 17));
+        _player = DataManager.LoadData<Player>("Player");
+        _shop = DataManager.LoadData<Shop>("Shop");
+        _dungeonManager = DataManager.LoadData<DungeonManager>("DungeonManager");
+
+        if (_player == null)
+        {
+            _player = new Player("이종윤", 1, "전사", 10, 5, 100, 10000);
+        }
+
+        if (_shop == null)
+        {
+            _shop = new Shop();
+            _shop.AddItem(new ShopItem("수련자의 갑옷", "수련에 도움을 주는 갑옷입니다.", 1000, ItemType.Armor, defense: 5));
+            _shop.AddItem(new ShopItem("무쇠 갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 2300, ItemType.Armor, defense: 9));
+            _shop.AddItem(new ShopItem("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, ItemType.Armor, defense: 15));
+            _shop.AddItem(new ShopItem("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, ItemType.Weapon, attack: 2));
+            _shop.AddItem(new ShopItem("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, attack: 5));
+            _shop.AddItem(new ShopItem("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3000, ItemType.Weapon, attack: 7));
+            _shop.AddItem(new ShopItem("광선검", "제다이 전사들이 사용하던 검입니다.", 5000, ItemType.Weapon, attack: 15));
+        }
+
+        if (_dungeonManager == null)
+        {
+            _dungeonManager = new DungeonManager();
+            _dungeonManager.AddDungeon(new Dungeon("쉬운 던전", 1000, 5));
+            _dungeonManager.AddDungeon(new Dungeon("일반 던전", 1700, 11));
+            _dungeonManager.AddDungeon(new Dungeon("어려운 던전", 2500, 17));
+        }
     }
 }
