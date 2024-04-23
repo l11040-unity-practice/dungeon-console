@@ -19,17 +19,27 @@ internal class Program
         mainMenu.AddOption(() => "상점", ShopMenu);
         mainMenu.AddOption(() => "던전입장", DungeonMenu);
         mainMenu.AddOption(() => "휴식하기", RestMenu);
-        mainMenu.AddOption(() => "데이터 저장하기", SaveData);
+        mainMenu.AddOption(() => "데이터 저장", SaveMenu);
 
         mainMenu.Run();
     }
 
     // 저장 메뉴
-    static void SaveData()
+    static void SaveMenu()
     {
-        DataManager.SaveData("Player", _player);
-        DataManager.SaveData("Shop", _shop);
-        DataManager.SaveData("DungeonManager", _dungeonManager);
+        Menu saveMenu = new Menu();
+        saveMenu.SetTitle("데이터 저장", "데이터를 저장할 수 있습니다.");
+        saveMenu.AddOption(() => "저장하기", () =>
+        {
+            DataManager.SaveData("Player", _player);
+            DataManager.SaveData("Shop", _shop);
+            DataManager.SaveData("DungeonManager", _dungeonManager);
+
+            Console.WriteLine("데이터가 저장되었습니다.");
+            Console.ReadLine();
+        });
+        saveMenu.Run();
+
     }
 
     // 휴식 메뉴
@@ -37,7 +47,11 @@ internal class Program
     {
         Menu restMenu = new Menu();
         restMenu.SetTitle("휴식하기", "500 G 를 내면 체력을 회복할 수 있습니다.");
-        restMenu.SetInfo(() => _player.RestInfo());
+        restMenu.SetInfo(() =>
+        {
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{_player.Gold} G\n");
+        });
         restMenu.AddOption(() => "휴식하기", _player.Rest);
         restMenu.Run();
     }
@@ -145,7 +159,7 @@ internal class Program
 
         if (_player == null)
         {
-            _player = new Player("이종윤", 1, "전사", 10, 5, 100, 10000);
+            _player = new Player("이종윤", 1, "전사", 10, 5, 100, 1000);
         }
 
         if (_shop == null)

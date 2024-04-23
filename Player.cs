@@ -102,13 +102,6 @@ namespace CsharpConsole
             return $"Gold {oldGold} G -> {Gold} G";
         }
 
-        // 휴식에서 보여줄 정보
-        public void RestInfo()
-        {
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"{Gold} G\n");
-        }
-
         // 휴식
         public void Rest()
         {
